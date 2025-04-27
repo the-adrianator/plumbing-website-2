@@ -1,0 +1,9 @@
+This directory contains placeholder images for the Nela Plumbing & Gas Services website.
+
+In a production environment, these would be replaced with:
+- Professional photos of plumbers in action
+- Images of completed projects
+- Photos of tools and equipment
+- Customer testimonial photos
+- Service area maps
+- Trust badges and certifications
