@@ -1,54 +1,64 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { MessageCircle } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { MessageCircle } from "lucide-react";
 
 export default function LiveChatWidget() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [message, setMessage] = useState('')
-  const [chatHistory, setChatHistory] = useState<{type: 'user' | 'agent', text: string}[]>([
-    {type: 'agent', text: 'Hello! How can I help you today with your plumbing or gas needs?'}
-  ])
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState<
+    { type: "user" | "agent"; text: string }[]
+  >([
+    {
+      type: "agent",
+      text: "Hello! How can I help you today with your plumbing or gas needs?",
+    },
+  ]);
 
   const toggleChat = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!message.trim()) return
+    e.preventDefault();
+    if (!message.trim()) return;
 
     // Add user message to chat
-    setChatHistory(prev => [...prev, {type: 'user', text: message}])
-    setMessage('')
+    setChatHistory((prev) => [...prev, { type: "user", text: message }]);
+    setMessage("");
 
     // Simulate agent response after a short delay
     setTimeout(() => {
-      setChatHistory(prev => [...prev, {
-        type: 'agent', 
-        text: "Thanks for your message. One of our plumbing experts will be with you shortly. For emergency services, please call us directly at 01234 567 890."
-      }])
-    }, 1000)
-  }
+      setChatHistory((prev) => [
+        ...prev,
+        {
+          type: "agent",
+          text: "Thanks for your message. One of our plumbing experts will be with you shortly. For emergency services, please call us directly at 07878 531920.",
+        },
+      ]);
+    }, 1000);
+  };
 
   // Auto-scroll to bottom of chat when new messages arrive
   useEffect(() => {
-    const chatContainer = document.getElementById('chat-messages')
+    const chatContainer = document.getElementById("chat-messages");
     if (chatContainer) {
-      chatContainer.scrollTop = chatContainer.scrollHeight
+      chatContainer.scrollTop = chatContainer.scrollHeight;
     }
-  }, [chatHistory])
+  }, [chatHistory]);
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {/* Chat Widget Button */}
-      <button 
+      <button
         onClick={toggleChat}
         className="bg-primary hover:bg-secondary text-white rounded-full p-4 shadow-lg transition-all duration-300 flex items-center gap-2"
         aria-label="Live Chat"
       >
         <MessageCircle className="w-6 h-6" />
-        <span className={`${isOpen ? 'hidden' : 'hidden sm:inline'}`}>Live Chat</span>
+        <span className={`${isOpen ? "hidden" : "hidden sm:inline"}`}>
+          Live Chat
+        </span>
       </button>
 
       {/* Chat Window */}
@@ -61,20 +71,22 @@ export default function LiveChatWidget() {
           </div>
 
           {/* Chat Messages */}
-          <div 
+          <div
             id="chat-messages"
             className="h-80 overflow-y-auto p-4 space-y-4"
           >
             {chatHistory.map((msg, index) => (
-              <div 
-                key={index} 
-                className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
+              <div
+                key={index}
+                className={`flex ${
+                  msg.type === "user" ? "justify-end" : "justify-start"
+                }`}
               >
-                <div 
+                <div
                   className={`max-w-[80%] rounded-lg p-3 ${
-                    msg.type === 'user' 
-                      ? 'bg-primary text-white rounded-tr-none' 
-                      : 'bg-gray-100 text-gray-800 rounded-tl-none'
+                    msg.type === "user"
+                      ? "bg-primary text-white rounded-tr-none"
+                      : "bg-gray-100 text-gray-800 rounded-tl-none"
                   }`}
                 >
                   {msg.text}
@@ -84,7 +96,10 @@ export default function LiveChatWidget() {
           </div>
 
           {/* Chat Input */}
-          <form onSubmit={handleSubmit} className="border-t border-gray-200 p-4 flex gap-2">
+          <form
+            onSubmit={handleSubmit}
+            className="border-t border-gray-200 p-4 flex gap-2"
+          >
             <input
               type="text"
               value={message}
@@ -92,7 +107,7 @@ export default function LiveChatWidget() {
               placeholder="Type your message..."
               className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             />
-            <button 
+            <button
               type="submit"
               className="bg-secondary hover:bg-secondary/90 text-white px-4 py-2 rounded-md"
             >
@@ -102,5 +117,5 @@ export default function LiveChatWidget() {
         </div>
       )}
     </div>
-  )
+  );
 }
